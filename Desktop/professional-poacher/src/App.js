@@ -1,39 +1,63 @@
 // Import everything needed to use the `useQuery` hook
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql } from "@apollo/client";
+import Login from "./pages/login";
+import SignUp from "./pages/signup";
+import Home from "./pages/home";
+import UserProfileComponent from './pages/user/userlist';
+import NavBar from "./components/navigation"
+import { Routes, Route } from "react-router-dom";
+import ProfilePage from "./pages/profile";
+import DummyProfile from "./pages/dummyprofile";
+import { useState } from "react";
+import MessageList from './pages/chat/messages';
+import ChatWithPage from "./pages/chat/chatwith";
+import TournamentCreation from "./pages/tournament/tournamentcreate";
+import TournamentList from "./pages/tournament/tournamentlist";
+import TournamentRegistration from "./pages/tournament/tournamentregister";
+import CourtMapComponent from "./pages/courts/map";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-function DisplayLocations() {
-  const { loading, error, data } = useQuery(GET_LOCATIONS);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
-
-  return data.locations.map(({ id, name, description, photo }) => (
-    <div key={id}>
-      <h3>{name}</h3>
-      <img width="400" height="250" alt="location-reference" src={`${photo}`} />
-      <br />
-      <b>About this location:</b>
-      <p>{description}</p>
-      <br />
-    </div>
-  ));
-}
-const GET_LOCATIONS = gql`
-  query GetLocations {
-    locations {
-      id
-      name
-      description
-      photo
-    }
-  }
-`;
+const theme = createTheme({
+  palette: {
+    background: {
+      default: '#1976d2'
+    },
+  },
+  // ...other theme options
+});
 export default function App() {
+  const [userProfile, setUserProfile] = useState(null);
+
+  const handleSignUpSuccess = (userData) => {
+    setUserProfile(userData);
+  };
+
   return (
-    <div>
-    <h2>My first Apollo app 🚀</h2>
-    <br/>
-    <DisplayLocations />
-  </div>
+    <ThemeProvider theme={theme}>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/signup"
+          element={<SignUp onSignupSuccess={handleSignUpSuccess} />}
+        />
+        <Route
+          path="/profile"
+          element={<ProfilePage profile={userProfile} />}
+        />
+        <Route path="/users" element={<UserProfileComponent />} />
+        <Route path="/user/:userId" element={<DummyProfile />} />
+        <Route path="/messages" element={<MessageList />} />
+        <Route path="/chat/:chatWith" element={<ChatWithPage />} />
+
+        <Route path="/tournament/create" element={<TournamentCreation />} />
+        <Route path="/tournament/list" element={<TournamentList />} />
+        <Route path="/tournament/register/:tournamentId" element={<TournamentRegistration />} />
+
+        <Route path="/courts/nearby" element={<CourtMapComponent />} />
+      </Routes>
+    </ThemeProvider>
   );
 }
