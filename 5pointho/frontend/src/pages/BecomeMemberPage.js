@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { becomeMember, cancelMembership } from '../services/userService';
-import { Typography, Box, Button, List, ListItem, Paper, Grid, Alert, CircularProgress } from '@mui/material';
+import { Typography, Button, List, ListItem, Paper, Grid, Alert, CircularProgress } from '@mui/material';
 import { styled } from '@mui/system';
 import { UserContext } from '../contexts/UserContext';
 
@@ -28,7 +27,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
 const BecomeMemberPage = () => {
     const { user, setUser } = useContext(UserContext);
-    const navigate = useNavigate();
     const [isMember, setIsMember] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');

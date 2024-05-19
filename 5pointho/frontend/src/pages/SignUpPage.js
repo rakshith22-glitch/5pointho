@@ -1,19 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Typography, Box, TextField, Button, Avatar, Container, CssBaseline, Grid, Link, Alert } from '@mui/material';
+import { Typography, Box, TextField, Button, Avatar, Container, Grid, Link, Alert } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { styled } from '@mui/system';
 import { register } from '../services/userService';
 import { UserContext } from '../contexts/UserContext';
-
-const FormContainer = styled(Box)(({ theme }) => ({
-    padding: theme.spacing(4),
-    maxWidth: '500px',
-    margin: 'auto',
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: theme.shape.borderRadius,
-    boxShadow: theme.shadows[2]
-}));
 
 const SignUpPage = () => {
     const [name, setName] = useState('');

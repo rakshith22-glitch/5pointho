@@ -37,7 +37,7 @@ const Home = () => {
     return (
         <Box>
             <HeroSection>
-                <Typography variant="h2" gutterBottom>Welcome to Pickleballho</Typography>
+                <Typography variant="h2" gutterBottom>Welcome to Pickleball.Ho!</Typography>
                 <Typography variant="h5" gutterBottom>Join the community, play, and improve your game.</Typography>
                 <Button
                     variant="contained"

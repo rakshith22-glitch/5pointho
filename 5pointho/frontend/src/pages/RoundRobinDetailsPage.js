@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Box, Typography, Card, CardContent, Button, Container, Grid, TextField, Link } from '@mui/material';
+import { Box, Typography, Card, CardContent, Button, Container, Link } from '@mui/material';
 import { getRoundRobin } from '../services/roundRobinService';
-import { getUserProfile } from '../services/userService';
 
 const RoundRobinDetailsPage = () => {
     const { id } = useParams();
@@ -13,7 +12,7 @@ const RoundRobinDetailsPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userProfile = await getUserProfile();
+
                 const roundRobinDetails = await getRoundRobin(id);
                
 
