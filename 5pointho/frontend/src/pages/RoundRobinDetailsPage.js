@@ -34,12 +34,15 @@ const RoundRobinDetailsPage = () => {
     if (!roundRobin) return <Typography>Loading...</Typography>;
 
     return (
-        <Container maxWidth="sm" sx={{ mt: 5 }}>
+        <Container maxWidth="md" sx={{ mt: 5 }}>
             <Card>
                 <CardContent>
-                    <Typography variant="h5" align="center">{roundRobin.title}</Typography>
-                    <Typography variant="body1" align="center">Date: {roundRobin.date}</Typography>
-                    <Typography variant="body1" align="center">Description: {roundRobin.description}</Typography>
+                    <Typography variant="h4" align="center" gutterBottom>{roundRobin.title}</Typography>
+                    <Typography variant="body1" align="center" gutterBottom>Date: {roundRobin.date}</Typography>
+                   
+                    <Typography variant="body1" align="center" gutterBottom>Start Time: {roundRobin.startTime}</Typography>
+                    <Typography variant="body1" align="center" gutterBottom>End Time: {roundRobin.endTime}</Typography>
+                    <Typography variant="body1" align="center" gutterBottom>Description: {roundRobin.gameDescription}</Typography>
                     {roundRobin.link && (
                         <Typography variant="body1" align="center" sx={{ mt: 2 }}>
                             Click on the link to join the round robin: 
@@ -48,20 +51,11 @@ const RoundRobinDetailsPage = () => {
                             </Link>
                         </Typography>
                     )}
-                    <Grid container justifyContent="center">
-                        <Grid item xs={4}>
-                            <TextField
-                                type="date"
-                                label="Date"
-                                InputLabelProps={{ shrink: true }}
-                                fullWidth
-                                name="date"
-                                value={roundRobin.date}
-                                onChange={(e) => setRoundRobin({ ...roundRobin, date: e.target.value })}
-                            />
-                        </Grid>
-                       
-                    </Grid>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                        <Button variant="contained" color="primary" onClick={() => navigate('/')}>
+                            Back to Home
+                        </Button>
+                    </Box>
                 </CardContent>
             </Card>
         </Container>

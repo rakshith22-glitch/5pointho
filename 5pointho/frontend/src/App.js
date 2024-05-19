@@ -1,4 +1,3 @@
-// frontend/src/js
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -30,8 +29,8 @@ import RoundRobinDetailsPage from './pages/RoundRobinDetailsPage';
 import AdminEditEvents from './pages/AdminEditEvents';
 import EditRoundRobinPage from './pages/EditRoundRobinPage';
 import UserProfile from './pages/UserProfile';
-import theme from './theme.js'
-import { UserContext, UserProvider } from './contexts/UserContext'; // Update import path as needed
+import theme from './theme.js';
+import { UserContext, UserProvider } from './contexts/UserContext';
 
 const Navbar = () => {
     const { user, logout } = useContext(UserContext);
@@ -133,13 +132,13 @@ const Navbar = () => {
                                     </>
                                 )}
                                 <Button color="inherit" component={Link} to="/events">Events</Button>
-                                <Box sx={{ flexGrow: 1 }} /> {/* Push the next button to the right */}
+                                <Box sx={{ flexGrow: 1 }} />
                                 <Button color="inherit" component={Link} to="/profile" startIcon={<AccountCircleIcon />}>Profile</Button>
                                 <Button color="inherit" onClick={logout}>Logout</Button>
                             </>
                         ) : (
                             <>
-                                <Box sx={{ flexGrow: 1 }} /> {/* Push the login/signup button to the right */}
+                                <Box sx={{ flexGrow: 1 }} />
                                 <Button color="inherit" component={Link} to="/login">Login</Button>
                                 <Button color="inherit" component={Link} to="/signup">Sign Up</Button>
                             </>
@@ -150,7 +149,6 @@ const Navbar = () => {
         </AppBar>
     );
 };
-
 
 const App = () => {
     return (

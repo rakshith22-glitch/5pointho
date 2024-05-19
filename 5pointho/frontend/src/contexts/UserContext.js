@@ -1,10 +1,11 @@
+// frontend/src/contexts/UserContext.js
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
 // Create UserContext
 export const UserContext = createContext();
 
 // Create UserProvider
-export const UserProvider = ({ children }) => {
+export const UserProvider = ({ children, navigate }) => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
@@ -32,7 +33,7 @@ export const UserProvider = ({ children }) => {
     };
 
     return (
-        <UserContext.Provider value={{ user, login, logout }}>
+        <UserContext.Provider value={{ user, setUser, login, logout }}>
             {children}
         </UserContext.Provider>
     );

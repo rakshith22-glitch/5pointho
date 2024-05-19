@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { becomeMember, cancelMembership } from '../services/userService';
-import { Typography, Box, Button, List, ListItem, Paper, Grid, Alert } from '@mui/material';
+import { Typography, Box, Button, List, ListItem, Paper, Grid, Alert, CircularProgress } from '@mui/material';
 import { styled } from '@mui/system';
 import { UserContext } from '../contexts/UserContext';
 
@@ -30,6 +30,8 @@ const BecomeMemberPage = () => {
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const [isMember, setIsMember] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         if (user) {
@@ -38,17 +40,23 @@ const BecomeMemberPage = () => {
     }, [user]);
 
     const handleMembershipChange = async () => {
+        setLoading(true);
+        setError('');
         try {
             if (isMember) {
                 await cancelMembership();
                 setUser((prevUser) => ({ ...prevUser, isMember: false }));
+                setIsMember(false);
             } else {
                 await becomeMember();
                 setUser((prevUser) => ({ ...prevUser, isMember: true }));
+                setIsMember(true);
             }
         } catch (error) {
             console.error('Membership update failed:', error);
-            alert('Failed to update membership status. Please try again.');
+            setError('Failed to update membership status. Please try again.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -56,6 +64,7 @@ const BecomeMemberPage = () => {
         <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }}>
             <Grid item>
                 <PageContainer>
+                    {error && <Alert severity="error" sx={{ marginBottom: 2 }}>{error}</Alert>}
                     <Alert severity="info" sx={{ marginBottom: 2 }}>
                         Membership is free for a limited time!
                     </Alert>
@@ -67,8 +76,13 @@ const BecomeMemberPage = () => {
                         <ListItem>Exclusive Pickleball tips and tricks</ListItem>
                         <ListItem>Monthly member newsletters</ListItem>
                     </List>
-                    <StyledButton variant="contained" color="primary" onClick={handleMembershipChange}>
-                        {isMember ? 'Cancel Membership' : 'Become a Member'}
+                    <StyledButton
+                        variant="contained"
+                        color="primary"
+                        onClick={handleMembershipChange}
+                        disabled={loading}
+                    >
+                        {loading ? <CircularProgress size={24} /> : isMember ? 'Cancel Membership' : 'Become a Member'}
                     </StyledButton>
                 </PageContainer>
             </Grid>

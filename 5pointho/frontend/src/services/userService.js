@@ -7,16 +7,16 @@ const handleErrorResponse = (error) => {
     throw new Error(error.response ? error.response.data.message : error.message);
 };
 
-export const register = async (name, email, password, userType = 'user') => {
+export const register = async (name, email, password, userType = 'user', isMember = false) => {
     try {
-        const response = await axios.post(`${API_URL}register`, { name, email, password, userType });
+        const response = await axios.post(`${API_URL}register`, { name, email, password, userType, isMember });
         if (response.data.token) localStorage.setItem('user', JSON.stringify(response.data));
         return response.data;
     } catch (error) {
-        handleErrorResponse(error);
+        console.error('Registration failed:', error);
+        throw error;
     }
 };
-
 export const login = async (email, password) => {
     try {
         const response = await axios.post(`${API_URL}login`, { email, password });
